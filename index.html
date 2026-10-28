@@ -373,46 +373,23 @@
     setInterval(createSnowflake, 250);
   </script>
 
-  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT -->
-  <audio id="bg-music" loop autoplay>
+    <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT -->
+  <audio id="bg-music" loop>
     <source src="https://raw.githubusercontent.com/Rxaovvip/web/refs/heads/main/cc.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Nút Bật/Tắt nhạc nổi trên màn hình -->
-  <button onclick="toggleMusic()" id="music-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #e74c3c; color: white; border: none; padding: 10px 14px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;">
-    🔇 Tắt Nhạc
-  </button>
-
   <script>
-    // Tự động phát nhạc khi tải trang
-    window.addEventListener('DOMContentLoaded', () => {
+    // Tự động bật nhạc ngay khi người dùng chạm vào màn hình lần đầu tiên ở bất cứ đâu
+    document.addEventListener('click', function musicPlay() {
       const music = document.getElementById('bg-music');
-      music.volume = 0.5; // Âm lượng 50%
-      music.play().catch(error => {
-        console.log("Trình duyệt chặn tự động phát, sẽ bật khi người dùng chạm vào màn hình.");
-      });
-    });
-
-    // Hàm bật/tắt khi bấm nút
-    function toggleMusic() {
-      const music = document.getElementById('bg-music');
-      const btn = document.getElementById('music-btn');
-      
       if (music.paused) {
+        music.volume = 0.5;
         music.play();
-        btn.innerHTML = '🔇 Bật Nhạc';
-        btn.style.background = '#e74c3c';
-      } else {
-        music.pause();
-        btn.innerHTML = '🎵 Bật Nhạc';
-        btn.style.background = '#5851e8';
       }
-    }
+      // Xóa sự kiện sau khi đã bật để không bị lặp lại
+      document.removeEventListener('click', musicPlay);
+    }, { once: true });
   </script>
-
-</body>
-</html>
-
 
 </body>
 </html>
