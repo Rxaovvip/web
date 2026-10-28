@@ -67,6 +67,24 @@
       opacity: 0.9;
     }
 
+    /* Style cho 2 mục Telegram & Discord mới thêm */
+    .community-box {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+    .community-box:active {
+      transform: scale(0.98);
+    }
+
     /* Khung thẻ chính */
     .app-card {
       background: #ffffff;
@@ -271,6 +289,32 @@
   </div>
 
 
+  <!-- ================= MỤC CỘNG ĐỒNG THÊM VÀO ================= -->
+  <!-- Nhóm Telegram -->
+  <a href="[DÁN_LINK_TELEGRAM_VÀO_ĐÂY]" target="_blank" class="community-box">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 40px; height: 40px; background: #0088cc; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; flex-shrink: 0;">✈️</div>
+      <div>
+        <div style="font-weight: 700; font-size: 14.5px; color: #111;">Nhóm Telegram</div>
+        <div style="font-size: 12px; color: #666; margin-top: 1px;">Nhận thông báo, báo lỗi & tặng key</div>
+      </div>
+    </div>
+    <div style="font-size: 16px; color: #888; font-weight: bold;">→</div>
+  </a>
+
+  <!-- Server Discord -->
+  <a href="[DÁN_LINK_DISCORD_VÀO_ĐÂY]" target="_blank" class="community-box">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 40px; height: 40px; background: #166534; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; flex-shrink: 0;">🎮</div>
+      <div>
+        <div style="font-weight: 700; font-size: 14.5px; color: #111;">Server Discord</div>
+        <div style="font-size: 12px; color: #666; margin-top: 1px;">Báo lỗi và trao đổi cộng đồng</div>
+      </div>
+    </div>
+    <div style="font-size: 16px; color: #888; font-weight: bold;">→</div>
+  </a>
+
+
   <!-- ================= MỤC 1: ANDROID (ADR) Ở ĐẦU ================= -->
   <div class="app-card">
     <div class="banner-wrapper">
@@ -329,7 +373,30 @@
   </div>
 
 
+  <!-- ================= NHẠC NỀN TỰ ĐỘNG PHÁT ================= -->
+  <audio id="bg-music" loop>
+    <source src="https://raw.githubusercontent.com/Rxaovvip/web/refs/heads/main/cc.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
+    // Tự động bật nhạc ngay khi có tương tác đầu tiên (chạm, click, cuộn)
+    function triggerMusic() {
+      const music = document.getElementById('bg-music');
+      if (music.paused) {
+        music.volume = 0.5;
+        music.play().then(() => {
+          window.removeEventListener('click', triggerMusic);
+          window.removeEventListener('touchstart', triggerMusic);
+          window.removeEventListener('touchend', triggerMusic);
+          window.removeEventListener('scroll', triggerMusic);
+        }).catch(err => {});
+      }
+    }
+    window.addEventListener('click', triggerMusic);
+    window.addEventListener('touchstart', triggerMusic);
+    window.addEventListener('touchend', triggerMusic);
+    window.addEventListener('scroll', triggerMusic);
+
     // Đồng hồ
     function updateClock() {
       const now = new Date();
