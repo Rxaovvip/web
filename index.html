@@ -373,21 +373,32 @@
     setInterval(createSnowflake, 250);
   </script>
 
-  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT (ĐÃ XÓA NÚT) -->
+  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT KHI CHẠM HOẶC VUỐT -->
   <audio id="bg-music" loop>
     <source src="https://raw.githubusercontent.com/Rxaovvip/web/refs/heads/main/cc.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Tự động bật nhạc ngay khi người dùng chạm tay vào bất kỳ đâu trên màn hình lần đầu tiên
-    document.addEventListener('click', function musicPlay() {
+    function triggerMusic() {
       const music = document.getElementById('bg-music');
       if (music.paused) {
         music.volume = 0.5;
-        music.play();
+        music.play().then(() => {
+          // Khi nhạc đã bật thành công thì gỡ bỏ các sự kiện đi để không bị gọi lại nhiều lần
+          window.removeEventListener('click', triggerMusic);
+          window.removeEventListener('touchstart', triggerMusic);
+          window.removeEventListener('scroll', triggerMusic);
+        }).catch(err => {
+          console.log("Đang chờ tương tác...");
+        });
       }
-      document.removeEventListener('click', musicPlay);
-    }, { once: true });
+    }
+
+    // Lắng nghe cả 3 hành động: Chạm (click), Chạm tay vào màn hình (touchstart), và Vuốt/Cuộn (scroll)
+    window.addEventListener('click', triggerMusic, { once: true });
+    window.addEventListener('touchstart', triggerMusic, { once: true });
+    window.addEventListener('scroll', triggerMusic, { once: true });
   </script>
+
 </body>
 </html>
