@@ -373,5 +373,40 @@
     setInterval(createSnowflake, 250);
   </script>
 
+  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT -->
+<audio id="bg-music" loop autoplay>
+  <source src="https://raw.githubusercontent.com/Rxaovvip/web/refs/heads/main/cc.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Nút Bật/Tắt nhạc nổi trên màn hình -->
+<button onclick="toggleMusic()" id="music-btn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; background: #e74c3c; color: white; border: none; padding: 10px 14px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;">
+  🔇 Tắt Nhạc
+</button>
+
+<script>
+  // Tự động thử phát nhạc khi vừa vào web
+  window.addEventListener('DOMContentLoaded', () => {
+    const music = document.getElementById('bg-music');
+    music.volume = 0.5; // Đặt âm lượng 50% (hoặc bỏ dòng này nếu muốn max âm lượng)
+    music.play().catch(error => {
+      console.log("Trình duyệt chặn tự động phát, cần người dùng tương tác.");
+    });
+  });
+
+  function toggleMusic() {
+    const music = document.getElementById('bg-music');
+    const btn = document.getElementById('music-btn');
+    
+    if (music.paused) {
+      music.play();
+      btn.innerHTML = '🔇 Tắt Nhạc';
+      btn.style.background = '#e74c3c';
+    } else {
+      music.pause();
+      btn.innerHTML = '🎵 Bật Nhạc';
+      btn.style.background = '#5851e8';
+    }
+  }
+</script>
 </body>
 </html>
