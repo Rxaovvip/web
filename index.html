@@ -373,7 +373,7 @@
     setInterval(createSnowflake, 250);
   </script>
 
-  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT KHI CHẠM HOẶC VUỐT -->
+  <!-- PHẦN NHẠC NỀN TỰ ĐỘNG PHÁT -->
   <audio id="bg-music" loop>
     <source src="https://raw.githubusercontent.com/Rxaovvip/web/refs/heads/main/cc.mp3" type="audio/mpeg">
   </audio>
@@ -384,21 +384,24 @@
       if (music.paused) {
         music.volume = 0.5;
         music.play().then(() => {
-          // Khi nhạc đã bật thành công thì gỡ bỏ các sự kiện đi để không bị gọi lại nhiều lần
+          // Thành công thì xóa hết các sự kiện lắng nghe đi
           window.removeEventListener('click', triggerMusic);
           window.removeEventListener('touchstart', triggerMusic);
+          window.removeEventListener('touchend', triggerMusic);
           window.removeEventListener('scroll', triggerMusic);
         }).catch(err => {
-          console.log("Đang chờ tương tác...");
+          console.log("Đợi tương tác...");
         });
       }
     }
 
-    // Lắng nghe cả 3 hành động: Chạm (click), Chạm tay vào màn hình (touchstart), và Vuốt/Cuộn (scroll)
-    window.addEventListener('click', triggerMusic, { once: true });
-    window.addEventListener('touchstart', triggerMusic, { once: true });
-    window.addEventListener('scroll', triggerMusic, { once: true });
+    // Bắt trọn mọi hành động của người dùng trên màn hình điện thoại
+    window.addEventListener('click', triggerMusic);
+    window.addEventListener('touchstart', triggerMusic);
+    window.addEventListener('touchend', triggerMusic);
+    window.addEventListener('scroll', triggerMusic);
   </script>
+
 
 </body>
 </html>
